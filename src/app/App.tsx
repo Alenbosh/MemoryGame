@@ -1,5 +1,6 @@
 import  GameBoard  from '../components/game/GameBoard';
 import '../App.css'
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
     return (
@@ -8,6 +9,7 @@ function App() {
                 Pokemon Memory Game
             </h1>
             <GameBoard />
+            <Analytics />
         </div >
     );
 }
