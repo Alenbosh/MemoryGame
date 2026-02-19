@@ -19,10 +19,20 @@ export function usePokemon() {
         selectedIds.add(randomId);
       }
       const pokemonData = await fetchPokemonBatch([...selectedIds]);
-
+      let cardCounter = 0;
       const pairedCards: GameCard[] = pokemonData.flatMap((poke: Pokemon) => [
-        { ...poke, isFlipped: false, isMatched: false },
-        { ...poke, isFlipped: false, isMatched: false },
+        {
+          ...poke,
+          instanceId: `${poke.id}-${cardCounter++}`,
+          isFlipped: false,
+          isMatched: false,
+        },
+        {
+          ...poke,
+          instanceId: `${poke.id}-${cardCounter++}`,
+          isFlipped: false,
+          isMatched: false,
+        },
       ]);
 
       const shuffled = shuffleArray(pairedCards);

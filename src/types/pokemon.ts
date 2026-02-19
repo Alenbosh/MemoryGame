@@ -14,6 +14,7 @@ export interface Pokemon {
 }
 
 export interface GameCard extends Pokemon {
+  instanceId: string;
   isFlipped: boolean;
   isMatched: boolean;
 }
