@@ -1,7 +1,7 @@
 import { usePokemon } from "../../hooks/usePokemon";
 import type { GameCard } from "../../types/pokemon";
 import PokemonCard from "./PokemonCard";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import ScoreBoard from "./ScoreBoard";
 import confetti from "canvas-confetti";
 
@@ -34,20 +34,6 @@ export default function GameBoard() {
       });
     }, 300);
   }, []);
-
-  useEffect(() => {
-    if (!cards.length || gameWon) return;
-
-    const allMatched = cards.every((c) => c.isMatched);
-    if (!allMatched) return;
-
-    setGameWon(true);
-    launchWinConfetti();
-    if (moves < bestMoves) {
-      setBestMoves(moves);
-      localStorage.setItem("pokemonMemoryBestMoves", moves.toString());
-    }
-  }, [cards, gameWon, launchWinConfetti, moves, bestMoves]);
 
   const handleCardClick = (clickedCard: GameCard) => {
     if (disabled) return;
@@ -85,6 +71,16 @@ export default function GameBoard() {
             }
             return c;
           });
+
+          const allMatched = updatedCards.every((c) => c.isMatched);
+          if (allMatched) {
+            setGameWon(true);
+            launchWinConfetti();
+            if (nextMoves < bestMoves) {
+              setBestMoves(nextMoves);
+              localStorage.setItem("pokemonMemoryBestMoves", nextMoves.toString());
+            }
+          }
 
           return updatedCards;
         });
